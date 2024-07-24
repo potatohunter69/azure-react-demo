@@ -1,3 +1,6 @@
+ # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
 name: Build and deploy Node.js app to Azure Web App - samiTest
 
 on:
@@ -23,20 +26,12 @@ jobs:
           npm install
           npm run build --if-present
           npm run test --if-present
-
-      - name: Upload artifact part 1
+      
+      - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
-          name: node-app-part1
-          path: |
-            ./build/**/*.*
-            !./build/static/**/*.*
-
-      - name: Upload artifact part 2
-        uses: actions/upload-artifact@v4
-        with:
-          name: node-app-part2
-          path: ./build/static/**/*.*
+          name: node-app
+          path: .
 
   deploy:
     runs-on: ubuntu-latest
@@ -45,32 +40,26 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write
+      id-token: write #This is required for requesting the JWT
 
     steps:
-      - name: Download artifact part 1
+      - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
-          name: node-app-part1
-          path: ./build
-
-      - name: Download artifact part 2
-        uses: actions/download-artifact@v4
-        with:
-          name: node-app-part2
-          path: ./build/static
-
+          name: node-app
+      
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_DADA5031AA574AD4BE4021632F8A14A7 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_06D5B118B5A54D4B99BD4F224C9602DA }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_4F719B56CAFD4459A23C67992B823649 }}
 
-      - name: Deploy to Azure Web App
+      - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
         with:
           app-name: 'samiTest'
           slot-name: 'Production'
-          package: ./build
+          package: 
+          
