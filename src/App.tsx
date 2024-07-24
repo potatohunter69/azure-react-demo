@@ -10,14 +10,10 @@ function App() {
         <p>
           
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+        <p
         >
           This is a React App hosted on Azure made by Sami
-        </a>
+        </p>
       </header>
     </div>
   );
