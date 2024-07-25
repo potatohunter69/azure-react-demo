@@ -13,9 +13,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Increase file descriptor limit
-        run: ulimit -n 4096
-
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
@@ -31,13 +28,15 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: node-app-batch-1
-          path: 'part_of_your_project/*'
+          path: |
+            part_of_your_project/*
 
       - name: Upload artifact for deployment job (batch 2)
         uses: actions/upload-artifact@v4
         with:
           name: node-app-batch-2
-          path: 'another_part_of_your_project/*'
+          path: |
+            another_part_of_your_project/*
 
   deploy:
     runs-on: ubuntu-latest
