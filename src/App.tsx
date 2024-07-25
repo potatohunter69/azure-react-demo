@@ -12,7 +12,7 @@ function App() {
         </p>
         <p
         >
-          This is a React App hosted on Azure made by Sami Noroozi 
+          Website Currently Unavailable
         </p>
       </header>
     </div>
